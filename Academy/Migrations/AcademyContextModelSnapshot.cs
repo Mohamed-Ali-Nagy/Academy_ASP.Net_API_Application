@@ -73,7 +73,7 @@ namespace Academy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Academy.Models.CourseBranche", b =>
@@ -88,7 +88,7 @@ namespace Academy.Migrations
 
                     b.HasIndex("BrancheId");
 
-                    b.ToTable("CourseBranche");
+                    b.ToTable("CoursesBranches");
                 });
 
             modelBuilder.Entity("Academy.Models.Student", b =>
@@ -146,7 +146,7 @@ namespace Academy.Migrations
 
                     b.HasIndex("BrancheId");
 
-                    b.ToTable("Student");
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Academy.Models.StudentCourse", b =>
@@ -161,7 +161,7 @@ namespace Academy.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("StudentCourse");
+                    b.ToTable("StudentsCourses");
                 });
 
             modelBuilder.Entity("Academy.Models.Subject", b =>
@@ -178,7 +178,7 @@ namespace Academy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subject");
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Academy.Models.SubjectCourse", b =>
@@ -193,7 +193,7 @@ namespace Academy.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("SubjectCourse");
+                    b.ToTable("SubjectsCourses");
                 });
 
             modelBuilder.Entity("Academy.Models.CourseBranche", b =>

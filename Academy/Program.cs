@@ -1,4 +1,8 @@
 
+using Academy.Data.Services;
+using Academy.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace Academy
 {
     public class Program
@@ -11,9 +15,10 @@ namespace Academy
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddDbContext<AcademyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnectionString")));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddScoped<IBrancheService, BrancheService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
