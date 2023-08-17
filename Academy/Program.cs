@@ -1,6 +1,5 @@
-
-using Academy.Data.Services;
 using Academy.Models;
+using Academy.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Academy

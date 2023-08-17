@@ -1,7 +1,5 @@
-﻿using Academy.Data.DTO;
-using Academy.Data.Services;
+﻿using Academy.Data.Repository;
 using Academy.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Academy.Controllers
@@ -10,15 +8,15 @@ namespace Academy.Controllers
     [ApiController]
     public class BrancheController : ControllerBase
     {
-        private readonly IBrancheService brancheService;
-        public BrancheController(IBrancheService _brancheService) 
+        private readonly IBrancheRepository brancheRepo;
+        public BrancheController(IBrancheRepository _brancheRepo) 
         {
-            brancheService = _brancheService;
+            brancheRepo = _brancheRepo;
         }
         [HttpGet]
         public IActionResult GetAll()
         {
-            var courses=brancheService.GetAll();
+            var courses=brancheRepo.GetAll();
             if(courses==null) 
             {
                 return NotFound();
@@ -28,7 +26,7 @@ namespace Academy.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            Branche branche=brancheService.GetById(id);
+            Branche branche=brancheRepo.GetById(id);
             if(branche==null) return NotFound();
             return Ok(branche);
         }

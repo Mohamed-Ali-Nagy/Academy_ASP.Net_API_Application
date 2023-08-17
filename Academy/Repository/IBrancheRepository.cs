@@ -1,8 +1,8 @@
 ﻿using Academy.Models;
 
-namespace Academy.Data.Services
+namespace Academy.Data.Repository
 {
-    public interface IBrancheService
+    public interface IBrancheRepository
     {
         List<Branche> GetAll();
         void Delete(Branche branche);

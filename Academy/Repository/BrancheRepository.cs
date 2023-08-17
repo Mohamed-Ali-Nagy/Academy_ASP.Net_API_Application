@@ -1,11 +1,12 @@
-﻿using Academy.Models;
+﻿using Academy.Data.Repository;
+using Academy.Models;
 
 namespace Academy.Data.Services
 {
-    public class BrancheService : IBrancheService
+    public class BrancheRepository : IBrancheRepository
     {
         private readonly AcademyContext context;
-        public BrancheService(AcademyContext _context)
+        public BrancheRepository(AcademyContext _context)
         {
             context = _context;
         }
