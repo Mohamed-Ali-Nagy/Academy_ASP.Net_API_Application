@@ -1,9 +1,11 @@
+using Academy.Data.Repository;
+using Academy.Data.Services;
 using Academy.Models;
-using Academy.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Academy
 {
+   
     public class Program
     {
         public static void Main(string[] args)
@@ -17,7 +19,7 @@ namespace Academy
             builder.Services.AddDbContext<AcademyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnectionString")));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IBrancheService, BrancheService>();
+            builder.Services.AddScoped<IBrancheRepository,BrancheRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

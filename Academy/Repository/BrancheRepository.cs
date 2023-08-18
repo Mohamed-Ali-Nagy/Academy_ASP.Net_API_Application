@@ -38,8 +38,8 @@ namespace Academy.Data.Services
 
         public void Update(Branche branche)
         {
-            Branche oldBranche=context.Branches.Find(branche.Id);
-            context.Branches.Update(oldBranche);
+           // Branche oldBranche=context.Branches.Find(branche.Id);
+            context.Branches.Update(branche);
         }
     }
 }
