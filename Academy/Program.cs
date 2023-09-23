@@ -1,6 +1,9 @@
 using Academy.Data.Repository;
 using Academy.Data.Services;
 using Academy.Models;
+using Academy.Repository;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Academy
@@ -20,6 +23,14 @@ namespace Academy
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IBrancheRepository,BrancheRepository>();
+            builder.Services.AddScoped<ISubjectRepository,SubjectRepository>();
+            builder.Services.AddCors(CorsOptions =>
+            {
+                CorsOptions.AddPolicy("AllowAllPolicy", CorsPolicyBuilder =>
+                {
+                    CorsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -28,7 +39,7 @@ namespace Academy
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors("AllowAllPolicy");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

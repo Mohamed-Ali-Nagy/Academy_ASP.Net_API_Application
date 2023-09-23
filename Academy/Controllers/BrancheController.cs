@@ -10,7 +10,7 @@ namespace Academy.Controllers
     public class BrancheController : ControllerBase
     {
         private readonly IBrancheRepository brancheRepo;
-        public BrancheController(IBrancheRepository _brancheRepo) 
+        public BrancheController(IBrancheRepository _brancheRepo)
         {
             brancheRepo = _brancheRepo;
         }
@@ -18,31 +18,32 @@ namespace Academy.Controllers
         public IActionResult GetAll()
         {
 
-            List<Branche> branches=brancheRepo.GetAll();
-            if(branches==null) 
+            List<Branche> branches = brancheRepo.GetAll();
+            if (branches == null)
             {
                 return NotFound();
             }
-            List<BrancheDTO> brancheDTOs = branches.Select(b =>new BrancheDTO
-                                                              {
-                                                                BrancheId = b.Id,
-                                                               BrancheName=b.Name,
-                                                               BranchePhoneNumber=b.PhoneNumber,
-                                                               BrancheSupervisorName=b.SupervisorName
-                                                              }).ToList();
+            List<BrancheDTO> brancheDTOs = branches.Select(b => new BrancheDTO
+            {
+                BrancheId = b.Id,
+                BrancheName = b.Name,
+                BranchePhoneNumber = b.PhoneNumber,
+                BrancheSupervisorName = b.SupervisorName
+            }).ToList();
             return Ok(brancheDTOs);
         }
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            Branche branche=brancheRepo.GetById(id);
-            if(branche==null) return NotFound();
-            BrancheDTO brancheDTO=new BrancheDTO()
+            Branche branche = brancheRepo.GetById(id);
+            if (branche == null) return NotFound();
+            BrancheDTO brancheDTO = new BrancheDTO()
             {
-                BrancheSupervisorName= branche.SupervisorName,
+                BrancheId = branche.Id,
+                BrancheSupervisorName = branche.SupervisorName,
                 BranchePhoneNumber = branche.PhoneNumber,
                 BrancheName = branche.Name,
-            
+
             };
             return Ok(brancheDTO);
         }
@@ -53,18 +54,18 @@ namespace Academy.Controllers
             if (brancheDTO == null) return BadRequest();
             if (!ModelState.IsValid) return BadRequest();
 
-            Branche branche=new Branche()
+            Branche branche = new Branche()
             {
-                Name=brancheDTO.BrancheName,
-                SupervisorName=brancheDTO.BrancheSupervisorName,
-                PhoneNumber=brancheDTO.BranchePhoneNumber,
+                Name = brancheDTO.BrancheName,
+                SupervisorName = brancheDTO.BrancheSupervisorName,
+                PhoneNumber = brancheDTO.BranchePhoneNumber,
             };
             brancheRepo.Add(branche);
             brancheRepo.Save();
-            return CreatedAtAction(nameof(GetById), new { id = branche.Id },brancheDTO);
+            return CreatedAtAction(nameof(GetById), new { id = branche.Id }, brancheDTO);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Update(BrancheDTO brancheDTO,int id)
         {
             if(brancheDTO==null) return BadRequest();

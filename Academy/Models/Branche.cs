@@ -14,6 +14,5 @@ namespace Academy.Models
 
         //Navigation prop
         public virtual List<Student> Students { get; set; } = new List<Student>();
-        public virtual List<CourseBranche> Courses { get; set; }= new List<CourseBranche>();
     }
 }

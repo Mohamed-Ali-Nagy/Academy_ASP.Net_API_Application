@@ -19,11 +19,9 @@ namespace Academy.Models
 
         //Navigation prop
 
-        public virtual List<CourseBranche> Branches { get; set; } = new List<CourseBranche>();
         public virtual List<StudentCourse> Students { get; set; } = new List<StudentCourse>();
 
-        public virtual List<SubjectCourse> Subjects { get; set; } = new List<SubjectCourse>();
-
+        public virtual List<Subject> Subjects { get; set; }=new List<Subject>();
 
     }
 }

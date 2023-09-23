@@ -4,6 +4,7 @@ using Academy.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Academy.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    partial class AcademyContextModelSnapshot : ModelSnapshot
+    [Migration("20230922162959_removeCourseBrancheTable")]
+    partial class removeCourseBrancheTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,18 +160,28 @@ namespace Academy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SubjectName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("Academy.Models.SubjectCourse", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubjectId", "CourseId");
+
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Subjects");
+                    b.ToTable("SubjectsCourses");
                 });
 
             modelBuilder.Entity("Academy.Models.Student", b =>
@@ -201,7 +214,7 @@ namespace Academy.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Academy.Models.Subject", b =>
+            modelBuilder.Entity("Academy.Models.SubjectCourse", b =>
                 {
                     b.HasOne("Academy.Models.Course", "Course")
                         .WithMany("Subjects")
@@ -209,7 +222,15 @@ namespace Academy.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Academy.Models.Subject", "Subject")
+                        .WithMany("Courses")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("Academy.Models.Branche", b =>
@@ -225,6 +246,11 @@ namespace Academy.Migrations
                 });
 
             modelBuilder.Entity("Academy.Models.Student", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("Academy.Models.Subject", b =>
                 {
                     b.Navigation("Courses");
                 });
