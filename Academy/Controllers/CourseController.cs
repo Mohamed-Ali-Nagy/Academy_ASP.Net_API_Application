@@ -49,6 +49,50 @@ namespace Academy.Controllers
 
             return Ok(courseDTO);
         }
-        
+        [HttpPost]
+        public IActionResult Add(CourseDTO courseDTO)
+        {
+            if (courseDTO == null) return BadRequest();
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            Course course = new Course()
+            {
+                Id = courseDTO.Id,
+                Cost = courseDTO.Cost,
+                NoOfHours= courseDTO.NoOfHours,
+                CourseName = courseDTO.CourseName,
+                CourseDescription= courseDTO.CourseDescription,
+            };
+            courseRepo.Add(course);
+            courseRepo.Save();
+            return CreatedAtAction(nameof(GetById), new {id=course.Id},courseDTO);
+        }
+
+        [HttpPut]
+        public IActionResult Update(CourseDTO courseDTO,int id)
+        {
+            if(courseDTO == null) return BadRequest("The course can not be null");
+            if (id != courseDTO.Id) return BadRequest("Thd id dose not equal cours id ");
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            Course course = courseRepo.GetById(id);
+            if (course == null) return NotFound();
+            course.Id = courseDTO.Id;
+            course.Cost = courseDTO.Cost;
+            course.NoOfHours = courseDTO.NoOfHours;
+            course.CourseName = courseDTO.CourseName;
+            course.CourseDescription = courseDTO.CourseDescription;
+            courseRepo.Update(course);
+            courseRepo.Save();
+            return Ok();
+        }
+
+        [HttpDelete] public IActionResult Delete(int id)
+        {
+            Course course=courseRepo.GetById(id);   
+            if (course == null) return NotFound();
+            courseRepo.Delete(course);
+            courseRepo.Save();
+            return Ok();
+        }
     }
 }

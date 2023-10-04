@@ -6,7 +6,7 @@ namespace Academy.Repository
     public class CourseRepository : ICourseRepository
     {
         private readonly AcademyContext context;
-        CourseRepository(AcademyContext _context)
+       public CourseRepository(AcademyContext _context)
         {
             context = _context;
         }

@@ -24,6 +24,8 @@ namespace Academy
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IBrancheRepository,BrancheRepository>();
             builder.Services.AddScoped<ISubjectRepository,SubjectRepository>();
+            builder.Services.AddScoped<ICourseRepository,CourseRepository>();
+            builder.Services.AddScoped<IStudentRepository,StudentRepository>();
             builder.Services.AddCors(CorsOptions =>
             {
                 CorsOptions.AddPolicy("AllowAllPolicy", CorsPolicyBuilder =>
